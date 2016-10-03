@@ -4,6 +4,6 @@ use Mix.Config
 
 config :exmeetup,
   api_base_uri: "https://api.meetup.com/",
-  meetup_name: "",
+  meetup_name: System.get_env("MEETUP_NAME") || "",
   access_token: System.get_env("MEETUP_ACCESS_TOKEN") || "",
   decoder: :string # :atoms (not efficient), :string (suggested, most efficient)

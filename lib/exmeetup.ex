@@ -10,7 +10,7 @@ defmodule Exmeetup do
 
       ```elixir
       def deps do
-        [{:exmeetup, "~> 0.0.1"}]
+        [{:exmeetup, "~> 0.0.2"}]
       end
       ```
 

@@ -10,7 +10,7 @@ The package can be installed as:
 
     ```elixir
     def deps do
-      [{:exmeetup, "~> 0.0.1"}]
+      [{:exmeetup, "~> 0.0.2"}]
     end
     ```
 
@@ -33,14 +33,29 @@ The package can be installed as:
     ```
 
 ## Usage
-
-If you need only body of api response, add bang(!) end of methods. On the other hand
-if you need header, body and response then use normal functions without ! sign.
+Normal method calls will return a status, headers, and body of response, wrapped in a tuple (with `:ok` or `:error`)
+If you want only the body (still wrapped in a tuple), pipe through Exmeetup.Client.body
+If you want only the body of api response, add bang(!) end of methods.
 
 ```elixir
-Exmeetup.Resource.Event.all!
-
+# Fetch the header, body, and status
 Exmeetup.Resource.Event.all
+#=> {:ok,
+#=>   %{body: [%{"created" => 1473384275000, ... }],
+#=>     headers: [{"Date", "Mon, 03 Oct 2016 17:24:28 GMT"}, ... ],
+#=>     status: 200
+#=>   }
+#=> }
+
+# Fetch the body and status (no header, no HTTP status, wrapped in a tuple)
+Exmeetup.Resource.Event.all |> Exmeetup.Client.body
+#=> {:ok,
+#=>   [%{"created" => 1473384275000, "description" => "...", ... }]
+#=> }
+
+# Fetch only the body (no header, no HTTP status, no tuple)
+Exmeetup.Resource.Event.all!
+#=> [%{"created" => 1473384275000, "description" => "...", ... }]
 ```
 
 ## Contributing
