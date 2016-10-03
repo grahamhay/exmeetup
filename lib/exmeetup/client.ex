@@ -29,7 +29,9 @@ defmodule Exmeetup.Client do
   Fetch only body from response
   """
   def body!({:ok, resp}), do: resp.body
-  def body!({:error, err}), do: err
+  def body!({:error, error}), do: error
+  def body({:ok, resp}), do: {:ok, resp.body}
+  def body({:error, error}), do: {:error, error}
 
   defp call(path, method, opts) do
     method
