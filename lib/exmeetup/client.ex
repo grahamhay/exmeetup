@@ -33,6 +33,24 @@ defmodule Exmeetup.Client do
   def body({:ok, resp}), do: {:ok, resp.body}
   def body({:error, error}), do: {:error, error}
 
+  def json_api({:error, error}), do: {:error, error}
+  def json_api({:ok, %{body: body}}, type) when is_list(body) do
+    %{ data: Enum.map(body, &json_api(&1, type)) }
+  end
+  def json_api({:ok, %{body: body}}, type), do: %{ data: json_api(body, type) }
+  def json_api(item, type) do
+    item_without_id = Enum.filter(item, fn({k,_v}) -> !(k in [:id,"id"]) end)
+    %{
+        type: type,
+        id: item.id,
+        attributes: attributes(item_without_id),
+        relationships: relationships(item_without_id)
+      }
+  end
+
+  defp attributes(item), do: Enum.filter(item, fn({_k,v}) -> !is_map(v) end)
+  defp relationships(item), do: Enum.filter(item, fn({_k,v}) -> is_map(v) end)
+
   defp call(path, method, opts) do
     method
     |> request(gen_endpoint(path), encode_options(opts), headers, [])
