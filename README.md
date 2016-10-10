@@ -10,7 +10,7 @@ The package can be installed as:
 
     ```elixir
     def deps do
-      [{:exmeetup, "~> 0.0.2"}]
+      [{:exmeetup, "~> 0.0.3"}]
     end
     ```
 
