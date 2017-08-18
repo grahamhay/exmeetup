@@ -8,29 +8,29 @@ The package can be installed as:
 
   1. Add `exmeetup` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:exmeetup, "~> 0.0.3"}]
-    end
-    ```
+```elixir 
+def deps do
+  [{:exmeetup, "~> 0.0.3"}]
+end
+```
 
   2. Ensure `exmeetup` is started before your application:
 
-    ```elixir
-    def application do
-      [applications: [:exmeetup]]
-    end
-    ```
+```elixir
+def application do
+  [applications: [:exmeetup]]
+end
+```
 
   3. Add your configuration to your config/config.exs
 
-    ```elixir
-    config :exmeetup,
-      api_base_uri: "https://api.meetup.com/",
-      meetup_name: "San-Diego-Elixir-Erlang"
-      access_token: System.get_env("MEETUP_ACCESS_TOKEN") || "",
-      decoder: :atoms # :atoms (not efficient), :string (suggested, most efficient)
-    ```
+```elixir
+config :exmeetup,
+  api_base_uri: "https://api.meetup.com/",
+  meetup_name: "San-Diego-Elixir-Erlang"
+  access_token: System.get_env("MEETUP_ACCESS_TOKEN") || "",
+  decoder: :atoms # :atoms (not efficient), :string (suggested, most efficient)
+```
 
 ## Usage
 Normal method calls will return a status, headers, and body of response, wrapped in a tuple (with `:ok` or `:error`)
